@@ -75,7 +75,7 @@ For generating a random filled grid, we have narrowed down to two options:
        	     1. return true; will recursively return true back to top-level
          2. otherwise, choose # based on 81/9 rounded up (index - 1)/9 + 1
        	     1. will increment from 1 to 9
-	     2. if this isn't still random (which I think it is), then just create variables tracking # selected/still available
+	      2. if this isn't still random (which I think it is), then just create variables tracking # selected/still available
          3. select the 3x3 *igrid* based on index % 9 ie. row (1-3, 4-6, 7-8 & 0) and column (147, 258, 360)
          4. get a copy of the set of 0's for that *igrid*
          5. remove blocked rows and blocked columns from set of 0's based block[]
