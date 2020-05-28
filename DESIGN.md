@@ -62,8 +62,8 @@ For generating a random filled grid, we have narrowed down to two options:
              2. Insert this number into the square of interest in the puzzle
              3. Check if the insertion has maintained a valid puzzle.
              4. If it has, recursively call the function on the next square in the puzzle.
-                *If this call to the function returns true (meaning all 81 squares are filled), return true.
-                *Otherwise, repeat with a different random number from the set.
+                1. If this call to the function returns true (meaning all 81 squares are filled), return true.
+                2. Otherwise, repeat with a different random number from the set.
           3. If the set has emptied out without returning, return false. This will cause the function to return to the previous square and try a different number in its set.
 
  2. 3x3 grid build
