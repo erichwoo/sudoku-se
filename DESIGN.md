@@ -51,7 +51,21 @@ We anticipate our *creator* to run as follows:
 
 For generating a random filled grid, we have narrowed down to two options:
 
- 1. Backtracing
+1. FUNC(int, puzzle)
+    if int 82
+       return true
+    else
+	set {1-9}
+	while set !empty
+	      choose random #, remove # from set, put into puzzle
+	      solver(#)
+	      if solver success
+	      	 FUNC(int + 1, puzzle)
+		 if true
+		    return true
+        return false
+
+ 1. Backtracking
     1. Note every possible number that can occur in a cell by checking if each digit 1-9 satisfies the Sudoku rules:
        1. Only one of each number per row
        2. Only one of each number per column
