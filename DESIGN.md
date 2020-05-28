@@ -24,11 +24,28 @@ We anticipate the following modules or functions:
 
 For generating a random filled grid:
  1. Backtracing
+   1. Note every possible number that can occur in a cell by checking if each digit 1-9 satisfies the Sudoku rules:
+      1. Only one of each number per row
+      2. Only one of each number per column
+      3. Only one of each number per 3x3 square
+   2. Randomly select one of these numbers and put it in the cell.
+   3. If there are no possible numbers that can be put in a cell:
+      1. Return to the previous cell and pick a different number from its set of possible numbers.
+      2. Repeat while there are no numbers to choose from for each cell.
+ 2. Once the grid is fully filled...
+   1. For a random number of iterations between 40 and 81...
+     1. Remove a random number from the puzzle and replace with 0.
+     2. Run the new puzzle through the solver.
+        1. If the puzzle is not unique, reinstate the deleted number and try again.
+        2. Otherwise, keep the number deleted and move on to another.
+
  2. 3x3 grid build
     1. for each row of 3x3 grids
        1. for each column of 3x3 grids
        	  1. 
 random build
+
+
 
 ### Dataflow through modules
   1. main parses the arguments and calls eitehr gridmaker or solver, depending on whether instructed to create or solve.
