@@ -67,27 +67,27 @@ For generating a random filled grid, we have narrowed down to two options:
           3. If the set has emptied out without returning, return false. This will cause the function to return to the previous square and try a different number in its set.
 
  2. Selective/Constraint-Based Backtracking by Building across 3x3 Grids
-    1. initiate a int[9][2][9] block[] to 0 for blocked row/columns [#][r/c][r/c #]. 1 signifies that number's row/column # is blocked
-    2. initiate an int index at 1, will run from 1-81
-    3. initiate an empty *ggrid* (see Major Data Structures)
-    4. call BUILD_FUNC(index, block[], *ggrid*)
-       1. if index = 82,
-       	  1. return true; will recursively return true back to top-level
-       2. otherwise, choose # based on 81/9 rounded up (index - 1)/9 + 1
-       	  1. will increment from 1 to 9
-	  2. if this isn't still random (which I think it is), then just create variables tracking # selected/still available
-       3. select the 3x3 *igrid* based on index % 9 ie. row (1-3, 4-6, 7-8 & 0) and column (147, 258, 360)
-       4. get a copy of the set of 0's for that *igrid*
-       5. remove blocked rows and blocked columns from set of 0's based block[]
-       6. while set of 0's is not empty,
-       	  1. randomly select one location in set of 0's and place # in that location in *igrid*.
-       	  2. if sudoku solver success,
-       	     1. fill in which row # and column # for that # is blocked in block[]
-	     3. call BUILD_FUNC(index + 1, block[], *ggrid*) on next index
-	     4. if above is true, return true
-	     	1. first happens when index = 82, then part 3&4 will continuously run back to back until the first call of BUILD_FUNC @ index = 1
-	     5. if above is false, remove # from *igrid*, block[], and set of 0's, then try again.
-       7. if set of 0's is exhausted, return false; will go back up one level to previous BUILD_FUNC call to try another location in set of 0's
+     1. initiate a int[9][2][9] block[] to 0 for blocked row/columns [#][r/c][r/c #]. 1 signifies that number's row/column # is blocked
+     2. initiate an int index at 1, will run from 1-81
+     3. initiate an empty *ggrid* (see Major Data Structures)
+     4. call BUILD_FUNC(index, block[], *ggrid*)
+         1. if index = 82,
+       	     1. return true; will recursively return true back to top-level
+         2. otherwise, choose # based on 81/9 rounded up (index - 1)/9 + 1
+       	     1. will increment from 1 to 9
+	     2. if this isn't still random (which I think it is), then just create variables tracking # selected/still available
+         3. select the 3x3 *igrid* based on index % 9 ie. row (1-3, 4-6, 7-8 & 0) and column (147, 258, 360)
+         4. get a copy of the set of 0's for that *igrid*
+         5. remove blocked rows and blocked columns from set of 0's based block[]
+         6. while set of 0's is not empty,
+       	     1. randomly select one location in set of 0's and place # in that location in *igrid*.
+       	     2. if sudoku solver success,
+       	         1. fill in which row # and column # for that # is blocked in block[]
+	     	 2. call BUILD_FUNC(index + 1, block[], *ggrid*) on next index
+	     	 3. if above is true, return true
+	     	     1. first happens when index = 82, then part 3&4 will continuously run back to back until the first call of BUILD_FUNC @ index = 1
+	     	 4. if above is false, remove # from *igrid*, block[], and set of 0's, then try again.
+         7. if set of 0's is exhausted, return false; will go back up one level to previous BUILD_FUNC call to try another location in set of 0's
        
 Once the grid is fully filled...
    1. For a number of iterations between 40 and 64... (we'll expand this as much as we can)
