@@ -18,6 +18,6 @@ s_sudo.o: s_sudo.h
 .PHONY: clean
 
 clean:
-	rm -f *~ *.o *.dSYM
+	rm -f *~ $(PROG).o *.dSYM
 	rm -f $(PROG)
 	rm -f stocks
