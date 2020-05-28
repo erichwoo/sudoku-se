@@ -40,7 +40,7 @@ The *solver* prints one solved solution for the inputted puzzle. If the puzzle h
 ### Functional decomposition into modules
 
 We anticipate the following modules or functions:
-  1. main parses the command-line arguments and either solves from stdin or generates a new puzzle depending on the command.
+  1. main, which parses the command-line arguments and either solves from stdin or generates a new puzzle depending on the command.
   2. gridmaker, which randomly generates a fully-solved sudoku grid.
   3. cellremover, which removes at least 40 cells from a fully solved grid, creating a puzzle that still has a unique solution.
   4. solver, which solves a puzzle and indicates how many solutions it has (whether it is unique).
@@ -51,18 +51,23 @@ We anticipate our *creator* to run as follows:
 
 For generating a random filled grid, we have narrowed down to two options:
 
- 1. Backtracking
-    1. Note every possible number that can occur in a cell by checking if each digit 1-9 satisfies the Sudoku rules:
-       1. Only one of each number per row
-       2. Only one of each number per column
-       3. Only one of each number per 3x3 square
-    2. Randomly select one of these numbers and put it in the cell.
-    3. If there are no possible numbers that can be put in a cell:
-       1. Return to the previous cell and pick a different number from its set of possible numbers.
-       2. Repeat while there are no numbers to choose from for each cell.
+ 1. Recursive backtracking
+    1. Starting with the first square in the puzzle...
+       1. Call a recursive function on a square in the puzzle.
+       2. If the square's position is 82, return true. This means that all 81 squares in the puzzle have been correctly filled.
+       3. If the square's position is not 82...
+          1. Create a set of numbers, 1 through 9.
+          2. While the set is not empty...
+             1. Remove a number from the set
+             2. Insert this number into the square of interest in the puzzle
+             3. Check if the insertion has maintained a valid puzzle.
+             4. If it has, recursively call the function on the next square in the puzzle.
+                1. If this call to the function returns true (meaning all 81 squares are filled), return true.
+                2. Otherwise, repeat with a different random number from the set.
+          3. If the set has emptied out without returning, return false. This will cause the function to return to the previous square and try a different number in its set.
 
- 2. selective/constraint-based Backtracing with 3x3 grid building
-    1. initiate int[9][2][9] block[] to 0 for blocked row/columns [#][r/c][r/c #]. 1 signifies that number's row/column # is blocked
+ 2. Selective/Constraint-Based Backtracking by Building across 3x3 Grids
+    1. initiate a int[9][2][9] block[] to 0 for blocked row/columns [#][r/c][r/c #]. 1 signifies that number's row/column # is blocked
     2. initiate an int index at 1, will run from 1-81
     3. initiate an empty *ggrid* (see Major Data Structures)
     4. call BUILD_FUNC(index, block[], *ggrid*)
@@ -75,14 +80,14 @@ For generating a random filled grid, we have narrowed down to two options:
        4. get a copy of the set of 0's for that *igrid*
        5. remove blocked rows and blocked columns from set of 0's based block[]
        6. while set of 0's is not empty,
-       	  1. randomly select one {r, c} location in set of 0's and place number in that location in *igrid*.
+       	  1. randomly select one location in set of 0's and place # in that location in *igrid*.
        	  2. if sudoku solver success,
-       	     1. fill in which row in that row of grids is blocked in block[]
-       	     2. fill in which column in that column of grids is blocked in block[]
-	     3. call BUILD_FUNC(index+1, block[], puzzle)
+       	     1. fill in which row # and column # for that # is blocked in block[]
+	     3. call BUILD_FUNC(index + 1, block[], *ggrid*) on next index
 	     4. if above is true, return true
+	     	* first happens when index = 82, then part 3&4 will continuously run back to back until the first call of BUILD_FUNC @ index = 1
 	     5. if above is false, remove # from *igrid*, block[], and set of 0's, then try again.
-       7. if set of 0's is exhausted, return false; will go back up one level to previous BUILD_FUNC call.
+       7. if set of 0's is exhausted, return false; will go back up one level to previous BUILD_FUNC call to try another location in set of 0's
        
 Once the grid is fully filled...
    1. For a number of iterations between 40 and 64... (we'll expand this as much as we can)
