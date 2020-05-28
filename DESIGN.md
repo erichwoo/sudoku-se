@@ -8,15 +8,14 @@ Sudoku is well known logic puzzle where numbers between 1 and 9 are placed on a 
 
 In a valid Sudoku grid every number from 1 to 9 must appear:
 
-*Only once in every row
-*Only once in every column
-*Only once in every 3x3 squared region
+* Only once in every row
+* Only once in every column
+* Only once in every 3x3 squared region
 
 Our *Sudoku* can *create* a randomized puzzle with a unique solution for solving, and can *solve* a puzzle.
 
 ### User Interface
-<<<<<<< HEAD
-=======
+
 The Sudoku program will run from the command line with one argument. The two possible usages are:
  * `./sudoku create`
  * `./sudoku solve`
@@ -109,4 +108,3 @@ If we go ahead with our "3x3 grid build* method, we expect the following structu
   * To test the solver, we will perform fuzz testing. To start, we will use the gridmaker to produce many valid puzzles.
   * Then, we will create a new function that randomly removes cells. Unlike the cellremover, this function will not check that it creates a unique puzzle each time. 
   * All of these unique puzzles will be passed to the solver to check for potential edge cases that we would have otherwise missed. We will check the solution to each randomly generated puzzle to make sure it was correctly solved and that the solver correctly indicated how many solutions it has. 
->>>>>>> 4599ee2092e7616fd3314ee2daf5fef1f41b05ce
