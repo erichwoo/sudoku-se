@@ -1,6 +1,6 @@
-#CS50 Project
-## Project Design Spec
-## Erich Woo & Spencer Grimm
+# CS50 Project
+## Sudoku Design Spec
+## Erich Woo & Spencer Grimm, Spring 2020
 
 ### Sudoku
 
@@ -47,6 +47,8 @@ We anticipate the following modules or functions:
 
 ### Pseudo-code for Logic/Algorithmic Flow
 
+We anticipate our *creator* to run as follows:
+
 For generating a random filled grid, we have narrowed down to two options:
 
  1. Backtracing
@@ -66,7 +68,7 @@ For generating a random filled grid, we have narrowed down to two options:
        	  1. initiate int[3] r_block of {0,0,0} signifiying (0/1) whether the {top,middle/bot} is blocked out within that row of grids. Scope is for each row of grids; should reset every row, but need to trace while walking down each grid in the row. 
        	  2. for each column of grids in puzzle (3)
        	     1. get the set of 0's for that grid
-	     	1. will be a set of {row, column} locations in the grid
+	     	* will be a set of {row, column} locations in the grid
 	     2. remove blocked rows and blocked columns from set of 0's based on int[3] r_block and int[3][3] c_block
 	     3. randomly select one {r, c} location in set of 0's and place number in that location in grid.
 	     4. fill in which row in that row of grids is blocked in r_block
@@ -74,10 +76,10 @@ For generating a random filled grid, we have narrowed down to two options:
 
 Once the grid is fully filled...
    1. For a random number of iterations between 40 and 81...
-     1. Remove a random number from the puzzle and replace with 0.
-     2. Run the new puzzle through the solver.
-        1. If the puzzle is not unique, reinstate the deleted number and try again.
-        2. Otherwise, keep the number deleted and move on to another.
+      1. Remove a random number from the puzzle and replace with 0.
+      2. Run the new puzzle through the solver.
+      	 1. If the puzzle is not unique, reinstate the deleted number and try again.
+         2. Otherwise, keep the number deleted and move on to another.
 
 ### Dataflow through modules
   1. main parses the arguments and calls eitehr gridmaker or solver, depending on whether instructed to create or solve.
