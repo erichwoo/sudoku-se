@@ -40,7 +40,7 @@ The *solver* prints one solved solution for the inputted puzzle. If the puzzle h
 ### Functional decomposition into modules
 
 We anticipate the following modules or functions:
-  1. main parses the command-line arguments and either solves from stdin or generates a new puzzle depending on the command.
+  1. main, which parses the command-line arguments and either solves from stdin or generates a new puzzle depending on the command.
   2. gridmaker, which randomly generates a fully-solved sudoku grid.
   3. cellremover, which removes at least 40 cells from a fully solved grid, creating a puzzle that still has a unique solution.
   4. solver, which solves a puzzle and indicates how many solutions it has (whether it is unique).
@@ -51,29 +51,20 @@ We anticipate our *creator* to run as follows:
 
 For generating a random filled grid, we have narrowed down to two options:
 
-1. FUNC(int, puzzle)
-    if int 82
-       return true
-    else
-	set {1-9}
-	while set !empty
-	      choose random #, remove # from set, put into puzzle
-	      solver(#)
-	      if solver success
-	      	 FUNC(int + 1, puzzle)
-		 if true
-		    return true
-        return false
-
- 1. Backtracking
-    1. Note every possible number that can occur in a cell by checking if each digit 1-9 satisfies the Sudoku rules:
-       1. Only one of each number per row
-       2. Only one of each number per column
-       3. Only one of each number per 3x3 square
-    2. Randomly select one of these numbers and put it in the cell.
-    3. If there are no possible numbers that can be put in a cell:
-       1. Return to the previous cell and pick a different number from its set of possible numbers.
-       2. Repeat while there are no numbers to choose from for each cell.
+ 1. Recursive backtracking
+    1. Starting with the first square in the puzzle...
+       1. Call a recursive function on a square in the puzzle.
+       2. If the square's position is 82, return true. This means that all 81 squares in the puzzle have been correctly filled.
+       3. If the square's position is not 82...
+          1. Create a set of numbers, 1 through 9.
+          2. While the set is not empty...
+             1. Remove a number from the set
+             2. Insert this number into the square of interest in the puzzle
+             3. Check if the insertion has maintained a valid puzzle.
+             4. If it has, recursively call the function on the next square in the puzzle.
+                *If this call to the function returns true (meaning all 81 squares are filled), return true.
+                *Otherwise, repeat with a different random number from the set.
+          3. If the set has emptied out without returning, return false. This will cause the function to return to the previous square and try a different number in its set.
 
  2. 3x3 grid build
     1. for each number 1-9,
