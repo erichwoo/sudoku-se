@@ -51,20 +51,6 @@ We anticipate our *creator* to run as follows:
 
 For generating a random filled grid, we have narrowed down to two options:
 
-1. FUNC(int, puzzle)
-    if int 82
-       return true
-    else
-	set {1-9}
-	while set !empty
-	      choose random #, remove # from set, put into puzzle
-	      solver(#)
-	      if solver success
-	      	 FUNC(int + 1, puzzle)
-		 if true
-		    return true
-        return false
-
  1. Backtracking
     1. Note every possible number that can occur in a cell by checking if each digit 1-9 satisfies the Sudoku rules:
        1. Only one of each number per row
@@ -75,21 +61,31 @@ For generating a random filled grid, we have narrowed down to two options:
        1. Return to the previous cell and pick a different number from its set of possible numbers.
        2. Repeat while there are no numbers to choose from for each cell.
 
- 2. 3x3 grid build
-    1. for each number 1-9,
-       1. initate int[3][3] c_block, signifying which column of grids, then which column within that column of grids is blocked. Scope is for each number, but shouldn't reset every row of grids; need to trace across every grid. 
-       2. for each row of grids in puzzle (3)
-       	  1. initiate int[3] r_block of {0,0,0} signifiying (0/1) whether the {top,middle/bot} is blocked out within that row of grids. Scope is for each row of grids; should reset every row, but need to trace while walking down each grid in the row. 
-       	  2. for each column of grids in puzzle (3)
-       	     1. get the set of 0's for that grid
-	     	* will be a set of {row, column} locations in the grid
-	     2. remove blocked rows and blocked columns from set of 0's based on int[3] r_block and int[3][3] c_block
-	     3. randomly select one {r, c} location in set of 0's and place number in that location in grid.
-	     4. fill in which row in that row of grids is blocked in r_block
-	     5. fill in which column in that column of grids is blocked in c_block
-
+ 2. selective/constraint-based Backtracing with 3x3 grid building
+    1. initiate int[9][2][9] block[] to 0 for blocked row/columns [#][r/c][r/c #]. 1 signifies that number's row/column # is blocked
+    2. initiate an int index at 1, will run from 1-81
+    3. initiate an empty *ggrid* (see Major Data Structures)
+    4. call BUILD_FUNC(index, block[], *ggrid*)
+       1. if index = 82,
+       	  1. return true; will recursively return true back to top-level
+       2. otherwise, choose # based on 81/9 rounded up (index - 1)/9 + 1
+       	  * will increment from 1 to 9
+	  * if this isn't still random (which I think it is), then just create variables tracking # selected/still available
+       3. select the 3x3 *igrid* based on index % 9 ie. row (1-3, 4-6, 7-8 & 0) and column (147, 258, 360)
+       4. get a copy of the set of 0's for that *igrid*
+       5. remove blocked rows and blocked columns from set of 0's based block[]
+       6. while set of 0's is not empty,
+       	  1. randomly select one {r, c} location in set of 0's and place number in that location in *igrid*.
+       	  2. if sudoku solver success,
+       	     1. fill in which row in that row of grids is blocked in block[]
+       	     2. fill in which column in that column of grids is blocked in block[]
+	     3. call BUILD_FUNC(index+1, block[], puzzle)
+	     4. if above is true, return true
+	     5. if above is false, remove # from *igrid*, block[], and set of 0's, then try again.
+       7. if set of 0's is exhausted, return false; will go back up one level to previous BUILD_FUNC call.
+       
 Once the grid is fully filled...
-   1. For a random number of iterations between 40 and 81...
+   1. For a number of iterations between 40 and 64... (we'll expand this as much as we can)
       1. Remove a random number from the puzzle and replace with 0.
       2. Run the new puzzle through the solver.
       	 1. If the puzzle is not unique, reinstate the deleted number and try again.
@@ -108,7 +104,7 @@ Once the grid is fully filled...
 If we go ahead with our "3x3 grid build* method, we expect the following structures:
 
 * a *ggrid* of *igrid*s in a 3x3 array; THE *ggrid* represents the whole 9x9 puzzle containing 9 *igrid*s in a 3x3 setup.
-* a *igrid* struct of 1) integers in a 3x3 array and 2) its row within *ggrid* and 3) its column within *ggrid*; The *igrid* represents a single 3x3 grid within the puzzle. 
+* a *igrid* struct of 1) integers in a 3x3 array 2) its row within *ggrid* 3) its column within *ggrid* and 4) a set of the 0's in the grid ; The *igrid* represents a single 3x3 grid within the puzzle. 
 
 ### Testing plan
 * Unit testing
