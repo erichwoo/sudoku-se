@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
 	if (strcmp(argv[1], "create") == 0) {
 		// initialize the puzzle's grid and begin filling in numbers, starting in upper left corner
 		int game[9][9];
-		fill_grid(1, game);
+		printf("%d\n", fill_grid(1, game));
 	}
 
 	return 0;
@@ -71,7 +71,7 @@ int fill_grid (int pos, int game[9][9])
 		// pick randomly from array of numbers that cell could possibly hold
 		int digit_set[9] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
 		while (set_sum(digit_set) != 0) {
-			int idx = rand() % 9;
+			int idx = (rand() + pos)  % 9;
 			int number = digit_set[idx];
 			digit_set[idx] = 0;
 			
@@ -86,7 +86,6 @@ int fill_grid (int pos, int game[9][9])
 					}
 				}
 			}
-
 		}
 		// If no possible numbers, fit in the puzzle, go back to the previous square and try other numbers
 		return 0;
