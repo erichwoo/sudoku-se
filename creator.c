@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
 		return 1;
 	}
 
-	int game[9][9];
+	int game[9][9] = {0};
 	
 	if (strcmp(argv[1], "create") == 0) {
 		// begin filling in numbers, starting in upper left corner
@@ -89,10 +89,10 @@ int fill_grid (int pos, int game[9][9])
 		// determine location in grid based on 'pos' parameter
 		int row = (int) (pos-1) / 9;
 		int col = (pos-1) % 9;
-
+		
 		// pick randomly from array of numbers that cell could possibly hold
 		int digit_set[9] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
-		while (set_sum(digit_set) != 0) {
+		while (set_sum(digit_set) != 0) {	
 			int idx = (rand() + row)  % 9;
 			int number = digit_set[idx];
 			digit_set[idx] = 0;
@@ -123,5 +123,8 @@ int set_sum(int digit_set[9])
 		sum += digit_set[i];
 	}
 
+#ifdef UTEST
+	printf("Sum = %d\n", sum);
+#endif
 	return sum;
 }
