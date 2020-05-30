@@ -5,7 +5,10 @@
 PROG = creator
 OBJS = creator.o s_sudo.o
 
-CFLAGS = -Wall -pedantic -std=c11
+# uncomment to turn on unit testing
+#UNITTEST = -DUTEST
+
+CFLAGS = -Wall -pedantic -std=c11 $(UNITTEST)
 CC = gcc
 MAKE = make
 
