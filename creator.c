@@ -59,7 +59,7 @@ int fill_grid (int pos, int game[9][9])
 
 	// return true if all of the positions in the game have been successfully filled
 	if (pos == 82) {
-// only print game at this point if unit testing (uncomment line in Makefile)
+// only print game at this point if unit testing (run 'make unit')
 #ifdef UTEST
 		print_game(game);
 #endif

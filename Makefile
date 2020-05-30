@@ -5,10 +5,9 @@
 PROG = creator
 OBJS = creator.o s_sudo.o
 
-# uncomment to turn on unit testing
-#UNITTEST = -DUTEST
+UNITTEST = -DUTEST
 
-CFLAGS = -Wall -pedantic -std=c11 $(UNITTEST)
+CFLAGS = -Wall -pedantic -std=c11
 CC = gcc
 MAKE = make
 
@@ -18,9 +17,17 @@ $(PROG): $(OBJS)
 creator.o: s_sudo.h
 s_sudo.o: s_sudo.h
 
-.PHONY: clean
+# run 'make unit' to unit test the creator
+.PHONY: unit unittest clean
+
+unittest: creator.c s_sudo.h s_sudo.o
+	$(CC) $(CFLAGS) $(UNITTEST) $^ -o $@
+
+unit: unittest
+	./unittest create
 
 clean:
 	rm -f *~ $(PROG).o *.dSYM
 	rm -f $(PROG)
 	rm -f stocks
+	rm -f unittest
