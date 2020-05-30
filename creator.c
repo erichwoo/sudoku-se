@@ -28,7 +28,6 @@ int main(int argc, char *argv[])
 		int game[9][9];
 		fill_grid(1, game);
 	}
-
 	return 0;
 }
 
@@ -55,6 +54,7 @@ void print_game(int game[9][9])
 int fill_grid (int pos, int game[9][9])
 {
 	// need a new random seed so generated random sequence is not always the same
+
 	srand(time(0));
 
 	// return true if all of the positions in the game have been successfully filled
@@ -74,7 +74,6 @@ int fill_grid (int pos, int game[9][9])
 			int idx = rand() % 9;
 			int number = digit_set[idx];
 			digit_set[idx] = 0;
-			
 			// if the randomly chosen number validly fits into the puzzle, move on to the next
 			// otherwise, try a different number
 			if (number != 0) {	
@@ -84,9 +83,11 @@ int fill_grid (int pos, int game[9][9])
 					if (fill_grid(pos + 1, game) == 1) {
 						return 1;
 					}
+					//delete from grid
+					game[row][col] = 0;
 				}
 			}
-
+		        
 		}
 		// If no possible numbers, fit in the puzzle, go back to the previous square and try other numbers
 		return 0;

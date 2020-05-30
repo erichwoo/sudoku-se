@@ -1,0 +1,6 @@
+creator.o
+*~
+core
+.*~
+.dSYM
+creator
