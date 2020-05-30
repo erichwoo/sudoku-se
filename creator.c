@@ -23,11 +23,30 @@ int main(int argc, char *argv[])
 		return 1;
 	}
 
+	int game[9][9];
+	
 	if (strcmp(argv[1], "create") == 0) {
-		// initialize the puzzle's grid and begin filling in numbers, starting in upper left corner
-		int game[9][9];
+		// begin filling in numbers, starting in upper left corner
 		fill_grid(1, game);
 	}
+
+	// read and solve game from stdin
+	if (strcmp(argv[1], "solve") == 0) {
+		if (read_game(game) == 1) {
+			int solutions = sudo_solve(game);
+			if (solutions == 0) {
+				printf("No solution.\n");
+			}
+			else {
+				print_game(game);
+			}
+		}
+		else {
+			fprintf(stderr, "Error: passed invalid game\n");
+			return 2;
+		}
+	}
+
 	return 0;
 }
 
