@@ -93,7 +93,7 @@ int fill_grid (int pos, int game[9][9])
 		// pick randomly from array of numbers that cell could possibly hold
 		int digit_set[9] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
 		while (set_sum(digit_set) != 0) {	
-			int idx = (rand() + row)  % 9;
+			int idx = (rand() + row * col)  % 9;
 			int number = digit_set[idx];
 			digit_set[idx] = 0;
 			// if the randomly chosen number validly fits into the puzzle, move on to the next
