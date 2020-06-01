@@ -1,4 +1,4 @@
-creator.o
+*.o
 *~
 core
 .*~
