@@ -26,20 +26,10 @@ int main(int argc, char *argv[])
 	}
 
 	int game[9][9] = {0};
-	// uncomment next chunk for testing a bug I found
-	//int expected[9][9];
 	if (strcmp(argv[1], "create") == 0) {
 	  // begin filling in numbers, starting in upper left corner
 	  fill_grid(1, game);
-	  //copy_game(game, expected);
 	  remove_cells(50, game);
-	  //print_game(game);
-	  //printf("\n");
-	  //int num = sudo_solve(game);
-	  //printf("actual: \n with %d solutions\n", num);
-	  //print_game(game);
-	  //printf("\n expected: \n");
-	  //print_game(expected);
 	  print_game(game);
 	}
 	

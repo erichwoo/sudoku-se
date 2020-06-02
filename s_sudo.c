@@ -118,7 +118,6 @@ int recursive_solve(int r, int c, int ggame[9][9], int sol[9][9], int num_sols){
                 if (ret >= 2){
                     return ret;
                 }
-
                 ggame[r][c] = 0;
             }
             else {
@@ -129,6 +128,9 @@ int recursive_solve(int r, int c, int ggame[9][9], int sol[9][9], int num_sols){
 
                 copy_game(ggame, sol);
 
+		// reset that last cell from solfor finding next sol
+		ggame[r][c] = 0;
+		
                 // Successfully found a solution so update the num_sols and
                 // return it.
                 return (num_sols + 1);
@@ -154,7 +156,7 @@ int sudo_solve(int ggame[9][9]){
     if (!(pass1 && pass2)) {
         return 0;
     }
-
+    
     copy_game(sol, ggame);
     return pass1;
 }
