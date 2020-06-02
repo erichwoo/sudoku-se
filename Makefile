@@ -27,7 +27,7 @@ unit: unittest
 	./unittest create
 
 clean:
-	rm -f *~ $(PROG).o *.dSYM
+	rm -f *~ *.o *.dSYM
 	rm -f $(PROG)
 	rm -f stocks
 	rm -f unittest
