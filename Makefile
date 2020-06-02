@@ -7,7 +7,7 @@ OBJS = creator.o s_sudo.o
 
 UNITTEST = -DUTEST
 
-CFLAGS = -Wall -pedantic -std=c11
+CFLAGS = -Wall -pedantic -std=c11 -ggdb
 CC = gcc
 MAKE = make
 

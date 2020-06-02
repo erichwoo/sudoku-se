@@ -12,7 +12,7 @@
 #include <limits.h>
 #include "s_sudo.h"
 
-void remove_cells(int game[9][9]);
+void remove_cells(int num, int game[9][9]);
 void print_game(int game[9][9]);
 int fill_grid(int pos, int game[9][9]);
 int set_sum(int digit_set[9]);
@@ -26,20 +26,10 @@ int main(int argc, char *argv[])
 	}
 
 	int game[9][9] = {0};
-	// uncomment next chunk for testing a bug I found
-	//int expected[9][9];
 	if (strcmp(argv[1], "create") == 0) {
 	  // begin filling in numbers, starting in upper left corner
 	  fill_grid(1, game);
-	  //copy_game(game, expected);
 	  remove_cells(50, game);
-	  //print_game(game);
-	  //printf("\n");
-	  //int num = sudo_solve(game);
-	  //printf("actual: \n with %d solutions\n", num);
-	  //print_game(game);
-	  //printf("\n expected: \n");
-	  //print_game(expected);
 	  print_game(game);
 	}
 	
