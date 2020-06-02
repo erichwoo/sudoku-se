@@ -94,6 +94,14 @@ void remove_cells(int num, int game[9][9]) {
     // being unique, add it and move on in forloop
     game[row][col] = 0;
   }
+
+// unit testing: copy the game and solve to check that it only has 1 solution
+#ifdef UTEST
+  printf("After remove_cells:\n");
+  int ngame[9][9] = {0};
+  copy_game(game, ngame); 
+  printf("Grid has %d solutions.\n", sudo_solve(ngame));
+#endif
 }
 
 // print the 9x9 grid, each number separated by a space
@@ -112,6 +120,11 @@ void print_game(int game[9][9])
 			}
 		}
 	}
+
+// unit testing: indicate that print function executed successfully
+#ifdef UTEST
+	printf("Succesful print.\n");
+#endif
 }
 
 // Creates a random, fully solved Sudoku grid
@@ -125,8 +138,9 @@ int fill_grid (int pos, int game[9][9])
 
 	// return true if all of the positions in the game have been successfully filled
 	if (pos == 82) {
-// only print game at this point if unit testing (run 'make unit')
+// unit testing: print the game at this point, after it has been filled
 #ifdef UTEST
+		printf("\nAfter fill_grid:\n");
 		print_game(game);
 		printf("\n");
 #endif
@@ -176,8 +190,14 @@ int set_sum(int digit_set[9])
 		sum += digit_set[i];
 	}
 
+// unit testing: check that function correctly adds each item in the digit set
 #ifdef UTEST
-	printf("Sum = %d\n", sum);
+	printf("Sum:");
+	for (int i=0; i<8; i++) {
+		printf(" %d +", digit_set[i]);
+	}
+	printf(" %d = ", digit_set[8]);
+	printf("%d\n", sum);
 #endif
 	return sum;
 }
