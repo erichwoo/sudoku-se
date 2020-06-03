@@ -22,6 +22,6 @@ To run unit testing, simply run 'make test'. This will output the tests detailed
 * We wrote an additional C program to conduct fuzz testing on the creator and solver.
 * This program takes as a command-line arguments the number of puzzles to create and solve.
 * It then uses the creator to create *n* puzzles and the solver to solve them.
-* If ever the program attempts to create an invalid puzzle or an invalid solution, it prints an error message. 
+* If ever the program attempts to create an invalid puzzle or an invalid solution, it prints an error message and continues.
 * After all *n* puzzles have been created and solved, it totals the number of errors from the creator and the solver and prints how many there were for each. 
 * If no error, it prints a success message. 

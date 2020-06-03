@@ -14,4 +14,15 @@ The usage for `sudoku` is either `./sudoku create` or `./sudoku solve`
 * 'create' will generate a randomized Sudoku puzzle and print to `stdout`
 * 'solve' will read a puzzle represented as a 9x9 grid from `stdin`, fill in the missing values to create a valid solution, and print the result to `stdout`. 
 
-To clean, run `make clean`
+To test unittesting and fuzztesting together, run `make test`.
+
+To clean, run `make clean`.
+
+Notes:
+
+No extra credit done.
+
+We added two functions to Professor's *s_sudo.c* solver module (for organization & consolidation of solver-related methods). They are `stdin_solve` and `solve`, at the bottom of the .c and .h file.
+
+We did not unit test the *solver* module, as it was created by Professor.
+
