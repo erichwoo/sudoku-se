@@ -1,4 +1,4 @@
-x/* 
+/* 
  * Final project for CS50
  * Sudoku creator and solver
  * Usages:
