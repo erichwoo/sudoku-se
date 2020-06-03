@@ -48,6 +48,9 @@ $(UNIT): $(UNITTESTOBJS)
 unit: unittest
 	./unittest create
 
+test: testing.sh
+	bash -v testing.sh
+
 clean:
 	rm -f *~ *.o *.dSYM core
 	rm -f $(PROG) $(FUZZ)

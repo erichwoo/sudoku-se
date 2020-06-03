@@ -17,7 +17,7 @@ int main(int argc, char* argv[]) {
   int numPuzzles, c_error = 0, s_error = 0;
   validate(argc, argv, &numPuzzles);
 
-  int missing = 50; // > 53 may not being able to complete at high repetitions; and is slower
+  int missing = 45; // > 53 may not being able to complete at high repetitions; and is slower
   printf("generating %d puzzles...\n\n", numPuzzles);
   for (int i = 0; i < numPuzzles; i++) {
     int created[9][9] = {0}, solved[9][9];

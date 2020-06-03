@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
 
 	int game[9][9] = {0};
 	if (strcmp(argv[1], "create") == 0) {
-	  if (create(50, game)) // change 1st param depending on how many missing #'s desired
+	  if (create(45, game)) // change 1st param depending on how many missing #'s desired
 	    return 2;
 	}
 	
@@ -35,20 +35,4 @@ int main(int argc, char *argv[])
 	}
 
 	return 0;
-}
-
-// print the 9x9 grid, each number separated by a space
-void print_game(int game[9][9])
-{
-	for (int i=0; i<9; i++) {
-		for (int j=0; j<9; j++) {
-			if (j==0) {
-				printf("%d", game[i][j]);
-			}
-			else {
-				printf(" %d", game[i][j]);
-			}
-		}
-		printf("\n");
-	}
 }

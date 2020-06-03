@@ -52,16 +52,18 @@
 2. get the microsecond of the t (ignore seconds) and use as seed in srand()
 3. loop n times, where n is desired cells to remove,
    1. initiate start condition 'temp' = 0; after while loop begins, temp = number of solutions in solved sudoku game
-   2. while 'temp' doesn't equal 1 (aka the solution after removing cell wasn't unique, so try again),
-      1. initiate another start condition 'blank' = 0; after while loop begins, blank = the value at randomly chosen cell
-      2. while 'blank' is 0 (aka the randomly chosen cell already has been removed earlier, so try again)
+   2. initiate & calculate a max number of loops (based on coupon collector's problem)
+   3. while 'temp' doesn't equal 1 (aka the solution after removing cell wasn't unique, so try again),
+      1. if number of times looping is greater than maxLoops, print statement and return
+      2. initiate another start condition 'blank' = 0; after while loop begins, blank = the value at randomly chosen cell
+      3. while 'blank' is 0 (aka the randomly chosen cell already has been removed earlier, so try again)
       	 1. get time of day for timeval t, use as a horizontal shift for rand() below
 	 2. randomly select cell # from 0 to 80 using modulus
 	 3. calculate the row and column based on idx
 	 4. set 'blank' equal to the value at (row, col). Will keep looping 1-4 until this isn't 0
-      3. copy the game to test a potential removal of that (row, col).
-      4. set (row, col) in copy to 0, and call *sudo_solve* on copy (set to 'temp'). Will keep looping 1-4 until this 'temp' value is 1
-   3. Set (row, col) in the game to 0
+      4. copy the game to test a potential removal of that (row, col).
+      5. set (row, col) in copy to 0, and call *sudo_solve* on copy (set to 'temp'). Will keep looping 1-5 until this 'temp' value is 1
+   4. Set (row, col) in the game to 0
 
 Note: I chose to do a while loop within a while loop (instead of a single while loop with two expressions connected with &&), because of speed concerns as the # desired to remove increases. The inner while loop requires a tiny constant clock time to loop while validating one of the expressions, but the outer loop requires an large & increasing amount of clock time while validating the other expression. More details in s_sudo.c inline comments.
 
@@ -103,7 +105,8 @@ No additional data structures created.
 Will exit with status:
    * 0 if no error.
    * 1 if invalid arguments (incorrect number or argument is neither 'create' nor 'solve'.
-   * 2 if the solver is passed an invalid game (not 9x9 grid).
+   * 2 if the creator couldn't remove x number of cells (since not a backtracking algorithm)
+   * 3 if the solver is passed an invalid game (not 9x9 grid).
 
 Note:
    * A game with no solution being passed to the solver is not considered an error. The program will simply indicate that the puzzle cannot be solved and return without error status.
