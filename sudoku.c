@@ -24,13 +24,14 @@ int main(int argc, char *argv[])
 
 	int game[9][9] = {0};
 	if (strcmp(argv[1], "create") == 0) {
-	  create(45, game); // change 1st param depending on how many missing #'s desired
+	  if (create(50, game)) // change 1st param depending on how many missing #'s desired
+	    return 2;
 	}
 	
 	// read and solve game from stdin
 	if (strcmp(argv[1], "solve") == 0) {
 	  if (stdin_solve(game))
-	    return 2;
+	    return 3;
 	}
 
 	return 0;

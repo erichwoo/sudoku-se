@@ -5,3 +5,4 @@ core
 .dSYM
 sudoku
 fuzzsudo
+unittest

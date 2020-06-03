@@ -75,7 +75,7 @@ int set_sum(int digit_set[9])
         return sum;
 }
 
-void remove_cells(int num, int game[9][9]) {
+int remove_cells(int num, int game[9][9]) {
   struct timeval t;
   gettimeofday(&t, NULL);
   srand(t.tv_usec % UINT_MAX); // ensure 32-bit system can handle 6 digits (2^16)
@@ -85,7 +85,17 @@ void remove_cells(int num, int game[9][9]) {
     temp = 0; // initiate start condition, reset temp with meaningful val after 1st loop
     // loop until a successful/valid trial-removal of r/c position from grid
 
+    // https://www.math.ucdavis.edu/~tracy/courses/math135A/UsefullCourseMaterial/couponProblem.pdf
+    // make sure doesn't break into infinite loop
+    double k = 0; // track how many times each number is tried to cut off infinite loop if no solution 
+    double n = 81 - i; // # of filled cells that the algorithm must all select
+    double gamma = 0.5772156649; // Euler–Mascheroni constant approximation
+    double expected_n = n * (log(n) + gamma + 1 / n); // coupon collector's problem
     while (temp != 1) {
+      if (k > 2 * expected_n) { // looking at distribution, highly unlikely past 2*expected
+	printf("Got stuck in search with no solutions at %d depth after %d tries.\n", i + 1, (int)k);
+	return 1;
+      }
       blank = 0; // same idea as 'temp'
       /* while-loop within while-loop to minimize sudo_solve calls
          'blank' loop < 10us constant time
@@ -106,6 +116,7 @@ void remove_cells(int num, int game[9][9]) {
       copy_game(game,copy);
       copy[row][col] = 0;
       temp = sudo_solve(copy);
+      k++;
     }
     // if the tried position can be removed while still
     // being unique, add it and move on in forloop
@@ -119,10 +130,14 @@ void remove_cells(int num, int game[9][9]) {
    copy_game(game, ngame); 
    printf("Grid has %d solutions.\n", sudo_solve(ngame));
 #endif
+
+   return 0;
 }
 
-void create(int num, int game[9][9]) {
+int create(int num, int game[9][9]) {
   fill_grid(1, game);
-  remove_cells(num, game);
+  if (remove_cells(num, game))
+    return 1;
   print_grid(game);
+  return 0;
 }

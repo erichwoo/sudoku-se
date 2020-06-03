@@ -11,6 +11,7 @@
 #include <string.h>
 #include <sys/time.h>
 #include <limits.h>
+#include <math.h>
 #include "s_sudo.h"
 
 /* Creates a random, fully solved Sudoku grid
@@ -34,7 +35,7 @@ int set_sum(int digit_set[9]);
  * @param num the number of cells to remove
  * @param game the filled grid
  */
-void remove_cells(int num, int game[9][9]);
+int remove_cells(int num, int game[9][9]);
 
 /* Creates a Sudoku Game and prints it to stdout
  * Note: create may stall if num > 55 or so
@@ -42,6 +43,6 @@ void remove_cells(int num, int game[9][9]);
  * @param num the number of missing cells desired
  * @param game an empty 9x9 game grid to fill
  */
-void create(int num, int game[9][9]);
+int create(int num, int game[9][9]);
 
 #endif // __C_SUDO_H

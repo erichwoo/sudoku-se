@@ -18,7 +18,7 @@ UNITTESTOBJS = $(S).o $(C)_$(UNIT).o $(PROG).o
 
 UNITTEST = -DUTEST
 
-CFLAGS = -Wall -pedantic -std=c11 -ggdb
+CFLAGS = -Wall -pedantic -std=c11 -ggdb -lm
 CC = gcc
 MAKE = make
 
