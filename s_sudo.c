@@ -1,3 +1,4 @@
+#include <unistd.h>
 #include <stdio.h>
 #include "s_sudo.h"
 
@@ -143,7 +144,6 @@ int recursive_solve(int r, int c, int ggame[9][9], int sol[9][9], int num_sols){
     return num_sols;
 }
 
-
 int sudo_solve(int ggame[9][9]){
     int r, c;
     int sol[9][9];
@@ -161,3 +161,31 @@ int sudo_solve(int ggame[9][9]){
     return pass1;
 }
 
+int stdin_solve(int game[9][9]) {
+  if (read_game(game) == 1)
+    solve(game, 0);
+  else {
+    fprintf(stderr, "Error: passed invalid game\n");
+    return 1;
+  }
+  return 0;
+}
+
+// for some reason implicit declaration still happens with stdio.h
+int fileno(FILE *stream);
+
+int solve(int game[9][9], int fuzz) {
+  if (fuzz || isatty(fileno(stdin))) // for better readability
+    printf("\n");
+  int solutions = sudo_solve(game);
+  printf("%d solution(s) found.\n", solutions);
+  if (solutions)
+    print_grid(game);
+  
+  if (fuzz == 1 && solutions != 1) {
+    printf("Error: Sudoku creator failed to create unique solution.\n");
+    return 1;
+  }
+
+  return 0;
+}

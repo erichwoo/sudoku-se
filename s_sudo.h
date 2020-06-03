@@ -57,4 +57,25 @@ int read_game(int ggame[9][9]);
 
 /* Top level Sudoku solver */
 int sudo_solve(int ggame[9][9]);
+
+/* Added by Erich & Spencer
+ * reads from stdin then validates input then calls solve() below
+ * 
+ * @param game a blank game grid
+ * @return 1 if reading error, 0 otherwise
+ */
+int stdin_solve(int game[9][9]);
+
+/* Added by Erich & Spencer
+ * calls sudo_solve above, printing output depending on fuzz
+ * fuzz = 1: called by fuzztesting
+ * 
+ * prints # of solutions and solved grid (if # > 0)
+ * if fuzz = 1, also prints Success(# = 1) or Fail message
+ *
+ * @param game the puzzle to solve
+ * @param fuzz whether (1) or not (0) fuzztesting output desired
+ * @return 1 if error in fuzztesting mode, 0 otherwise
+ */
+int solve(int game[9][9], int fuzz);
 #endif

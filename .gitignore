@@ -3,4 +3,5 @@
 core
 .*~
 .dSYM
-creator
+sudoku
+fuzzsudo

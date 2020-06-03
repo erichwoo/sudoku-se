@@ -2,7 +2,7 @@
 ## Sudoku Implementation Spec
 ### Erich Woo & Spencer Grimm, Spring 2020
 
-### Pseudocode for `main()`
+### Pseudocode for sudoku `main()`
 
 1. Validate parameters
    1. If there is not exactly one parameter with the call to 'creator'...
@@ -48,14 +48,32 @@
       1. This means that backtracking must occur (values in previous positions must be altered) to create a valid puzzle.
 
 ### Pseudocode for `remove_cells()`
+1. initiate a struct timeval t to track time in microseconds
+2. get the microsecond of the t (ignore seconds) and use as seed in srand()
+3. loop n times, where n is desired cells to remove,
+   1. initiate start condition 'temp' = 0; after while loop begins, temp = number of solutions in solved sudoku game
+   2. while 'temp' doesn't equal 1 (aka the solution after removing cell wasn't unique, so try again),
+      1. initiate another start condition 'blank' = 0; after while loop begins, blank = the value at randomly chosen cell
+      2. while 'blank' is 0 (aka the randomly chosen cell already has been removed earlier, so try again)
+      	 1. get time of day for timeval t, use as a horizontal shift for rand() below
+	 2. randomly select cell # from 0 to 80 using modulus
+	 3. calculate the row and column based on idx
+	 4. set 'blank' equal to the value at (row, col). Will keep looping 1-4 until this isn't 0
+      3. copy the game to test a potential removal of that (row, col).
+      4. set (row, col) in copy to 0, and call *sudo_solve* on copy (set to 'temp'). Will keep looping 1-4 until this 'temp' value is 1
+   3. Set (row, col) in the game to 0
+
+Note: I chose to do a while loop within a while loop (instead of a single while loop with two expressions connected with &&), because of speed concerns as the # desired to remove increases. The inner while loop requires a tiny constant clock time to loop while validating one of the expressions, but the outer loop requires an large & increasing amount of clock time while validating the other expression. More details in s_sudo.c inline comments.
 
 ### Function Prototypes
 
-```
+Within the creator module *c_sudo*:
+
+```c
 void fill_grid(int pos, int game[9][9]);
 void remove_cells(int num, int game[9][9]);
-void print_grid(int game[9][9]);
 int set_sum(int digit_set[9]);
+void create(int game[9][9]);
 ```
 * `num` indicates the number of cells to be removed in `remove_cells()`
 * `pos` indicates the position (1 through 81) of the current cell being filled in `fill_grid()`
@@ -63,7 +81,22 @@ int set_sum(int digit_set[9]);
 * `set_sum()` is just a helper function for `fill_grid()` that calculates the sum of all values in a set containing 9 integers.
 * `print_grid()` simply formats the given grid into 9 rows containing 9 digits each, each digit separated by a space and each row separated by a newline, and prints to `stdout`.
 
+Additional functions we added to Professor Vasanta's *s_sudo*:
+
+```c
+int stdin_solve(int game[9][9]);
+int solve(int game[9][9], int fuzz);
+```
+
+* `game[9][9]` in stdin_solve is an empty game grid, which will be filled by standard input and solved by the internal solver
+* `game[9][9]` in solve is the puzzle to be solved.
+* `fuzz` in solve is either 1 or 0, signifying whether or not in fuzztesting (additional printing is desired)
+
+These functions were added to aid in our *sudoku.c* and *fuzzsudo.c*
+
 ### Data Structures
+
+No additional data structures created.
 
 ### Error Handling
 

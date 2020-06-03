@@ -88,13 +88,15 @@ For generating a random filled grid, we have narrowed down to two options:
 	     	     1. first happens when index = 82, then part 3&4 will continuously run back to back until the first call of BUILD_FUNC @ index = 1
 	     	 4. if above is false, remove # from *igrid*, block[], and set of 0's, then try again.
          7. if set of 0's is exhausted, return false; will go back up one level to previous BUILD_FUNC call to try another location in set of 0's
-       
+
 Once the grid is fully filled...
    1. For a number of iterations between 40 and 64... (we'll expand this as much as we can)
       1. Remove a random number from the puzzle and replace with 0.
       2. Run the new puzzle through the solver.
       	 1. If the puzzle is not unique, reinstate the deleted number and try again.
          2. Otherwise, keep the number deleted and move on to another.
+
+Note: In the end, we went with Recursive Backtracking as our grid-filling method.
 
 ### Dataflow through modules
   1. main parses the arguments and calls eitehr gridmaker or solver, depending on whether instructed to create or solve.
