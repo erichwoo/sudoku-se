@@ -20,7 +20,7 @@ int main(int argc, char* argv[]) {
   int missing = 45; // > 53 may not being able to complete at high repetitions; and is slower
   printf("generating %d puzzles...\n\n", numPuzzles);
   for (int i = 0; i < numPuzzles; i++) {
-    int created[9][9] = {0}, solved[9][9];
+    int created[9][9] = {0}, solved[9][9] = {0};
     printf("------------- Fuzztesting Puzzle %d --------------\n", i + 1);
     printf("The puzzle to solve:\n");
     if (create(missing, created)) // won't count as an error
