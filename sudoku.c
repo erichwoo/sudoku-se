@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
 
 	int game[9][9] = {0};
 	if (strcmp(argv[1], "create") == 0) {
-	  create(game);
+	  create(45, game); // change 1st param depending on how many missing #'s desired
 	}
 	
 	// read and solve game from stdin

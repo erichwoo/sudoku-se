@@ -22,7 +22,7 @@ int main(int argc, char* argv[]) {
     int created[9][9] = {0}, solved[9][9];
     printf("------------- Fuzztesting Puzzle %d --------------\n", i + 1);
     printf("The puzzle to solve:\n");
-    create(created);
+    create(45, created);
     copy_game(created, solved);
 
     // solve and check if unique solution
@@ -49,10 +49,11 @@ int main(int argc, char* argv[]) {
   }
   
   printf("--------------- END OF FUZZTESTING ---------------\n");
-  printf("Number of errors found in %d puzzles: %d\n\n", numPuzzles, s_error + c_error);
-  if (s_error || c_error) {
+  printf("%d errors found in %d puzzle-contexts\n", s_error + c_error, numPuzzles);
+  if (s_error || c_error) 
     fprintf(stderr, "%d creator errors and %d solver errors\n", c_error, s_error);
-  }
+  else
+    printf("Success! Creator only creates unique solutions; Solver solution follows Sudoku rules and doesn't change already-filled cells.\n\n");
   return s_error + c_error; // 0 if no error, positive if error (and its #)
 }
 

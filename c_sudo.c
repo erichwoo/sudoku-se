@@ -121,8 +121,8 @@ void remove_cells(int num, int game[9][9]) {
 #endif
 }
 
-void create(int game[9][9]) {
+void create(int num, int game[9][9]) {
   fill_grid(1, game);
-  remove_cells(45, game); // change 1st param based on # to remove
+  remove_cells(num, game);
   print_grid(game);
 }
