@@ -26,3 +26,8 @@ We added two functions to Professor's *s_sudo.c* solver module (for organization
 
 We did not unit test the *solver* module, as it was created by Professor.
 
+### Video Presentation
+
+Our video presentation is linked to my Google drive @ [https://drive.google.com/file/d/1GuJyWx5ISB-FJ-tBCb1yL9f-849s4Gmt/view?usp=sharing](https://drive.google.com/file/d/1GuJyWx5ISB-FJ-tBCb1yL9f-849s4Gmt/view?usp=sharing).
+
+I(Erich) currently have access restricted to Dartmouth College and only through this link, so if you still can't access it, please email me @ erich.woo.23@dartmouth.edu.
