@@ -18,6 +18,12 @@ int fill_grid (int pos, int game[9][9])
 #ifdef UTEST
 		printf("\nAfter fill_grid:\n");
 		print_grid(game);
+		if (is_valid_grid(game) == 1) {
+			printf("Valid game.\n");
+		}
+		else {
+			printf("Error. Invalid game\n");
+		}
 		printf("\n");
 #endif
                 return 1;
